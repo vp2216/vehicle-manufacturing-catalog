@@ -22,7 +22,7 @@ function App() {
             data.Mfr_CommonName &&
             data.Country &&
             data.VehicleTypes.find((i) => {
-              return i.IsPrimary == true;
+              return i.IsPrimary === true;
             })?.Name
           );
         });
@@ -75,7 +75,7 @@ function App() {
       const searchResult = data.filter((i) => {
         return (
           i.VehicleTypes.find((i) => {
-            return i.IsPrimary == true;
+            return i.IsPrimary === true;
           }).Name.trim() === filterVal
         );
       });
@@ -149,7 +149,7 @@ function App() {
                   <td>{data.Country}</td>
                   <td>
                     {data.VehicleTypes.find((i) => {
-                      return i.IsPrimary == true;
+                      return i.IsPrimary === true;
                     }).Name.trim()}
                   </td>
                 </tr>
