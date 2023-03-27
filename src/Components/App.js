@@ -176,7 +176,7 @@ function App() {
       <div className="pagination">
         <button onClick={() => setPage(page - 1)} disabled={page===1?true:false}>{"<"}</button>
         <span>{page}</span>
-        <button onClick={() => setPage(page + 1)} disabled={data.length===0?true:false}>{">"}</button>
+        <button onClick={() => setPage(page + 1)} disabled={page===4?true:false}>{">"}</button>
       </div>
     </div>
   );
