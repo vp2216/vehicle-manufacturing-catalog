@@ -71,6 +71,7 @@ function App() {
       else if (filter === "iv") filterVal = "Incomplete Vehicle";
       else if (filter === "bus") filterVal = "Bus";
       else if (filter === "truck") filterVal = "Truck";
+      else if (filter === "trailer") filterVal = "Trailer";
 
       const searchResult = data.filter((i) => {
         return (
@@ -129,6 +130,7 @@ function App() {
             <option value="iv">Incomplete Vehicle</option>
             <option value="bus">Bus</option>
             <option value="truck">Truck</option>
+            <option value="trailer">Trailer</option>
           </select>
         </span>
       </div>
@@ -174,9 +176,19 @@ function App() {
         </div>
       ) : null}
       <div className="pagination">
-        <button onClick={() => setPage(page - 1)} disabled={page===1?true:false}>{"<"}</button>
+        <button
+          onClick={() => setPage(page - 1)}
+          disabled={page === 1 ? true : false}
+        >
+          {"<"}
+        </button>
         <span>{page}</span>
-        <button onClick={() => setPage(page + 1)} disabled={page===4?true:false}>{">"}</button>
+        <button
+          onClick={() => setPage(page + 1)}
+          disabled={page === 4 ? true : false}
+        >
+          {">"}
+        </button>
       </div>
     </div>
   );
