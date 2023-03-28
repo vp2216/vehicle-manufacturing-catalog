@@ -21,9 +21,10 @@ function App() {
           return (
             data.Mfr_CommonName &&
             data.Country &&
-            data.VehicleTypes.find((i) => {
+            (data.VehicleTypes.find((i) => {
               return i.IsPrimary === true;
-            })?.Name
+            })?.Name ||
+              data.VehicleTypes[0]?.Name)
           );
         });
         setData(requiredData);
@@ -37,24 +38,25 @@ function App() {
       return;
     } else {
       setFilter("all");
-      if (
-        searchVal.includes("[") ||
-        searchVal.includes("*") ||
-        searchVal.includes("(") ||
-        searchVal.includes(")") ||
-        searchVal.match(/\\$/)
-      ) {
-        alert("Please dont input ( [ , * , ( , ) , //) these charecters");
-        setSearchVal("");
-        return;
-      }
-      const regex = new RegExp("^" + searchVal.toLowerCase());
+      // if (
+      //   searchVal.includes("[") ||
+      //   searchVal.includes("*") ||
+      //   searchVal.includes("(") ||
+      //   searchVal.includes(")") ||
+      //   searchVal.match(/\\$/)
+      // ) {
+      //   alert("Please dont input ( [ , * , ( , ) , //) these charecters");
+      //   setSearchVal("");
+      //   return;
+      // }
+      // const regex = new RegExp("^" + searchVal.toLowerCase());
       const searchResult = data.filter((i) => {
-        return regex.test(i.Mfr_CommonName.toLowerCase());
+        // return regex.test(i.Mfr_CommonName.toLowerCase());
+        return i.Mfr_CommonName.toLowerCase().includes(searchVal.toLowerCase());
       });
       setSearch(searchResult);
     }
-  }, [searchVal,data]);
+  }, [searchVal, data]);
 
   useEffect(() => {
     if (!filter || filter === "all") {
@@ -74,15 +76,20 @@ function App() {
       else if (filter === "trailer") filterVal = "Trailer";
 
       const searchResult = data.filter((i) => {
-        return (
-          i.VehicleTypes.find((i) => {
+        
+        if (i.VehicleTypes.find((i) => {
+          return i.IsPrimary === true;
+        })?.Name.trim()) {
+          return (i.VehicleTypes.find((i) => {
             return i.IsPrimary === true;
-          }).Name.trim() === filterVal
-        );
+          })?.Name.trim() === filterVal);
+        } else {
+          return i.VehicleTypes[0]?.Name === filterVal
+        }
       });
       setFilterData(searchResult);
     }
-  }, [filter,data]);
+  }, [filter, data]);
 
   useEffect(() => {
     getData();
@@ -152,7 +159,7 @@ function App() {
                   <td>
                     {data.VehicleTypes.find((i) => {
                       return i.IsPrimary === true;
-                    }).Name.trim()}
+                    })?.Name.trim() || data.VehicleTypes[0]?.Name}
                   </td>
                 </tr>
               );
